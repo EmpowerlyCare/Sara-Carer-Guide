@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sara — Carer &amp; Support Worker Guide</title>
+<style>
+  :root{
+    --teal:#1b7a7a; --purple:#6d3fa0; --red:#c0392b; --green:#1f7a4a; --orange:#cf6a1e; --black:#1a1a1a;
+  }
+  * { box-sizing: border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    font-family: Arial, Helvetica, sans-serif;
+    color:#222;
+    background:#f4f5f6;
+    line-height:1.55;
+    font-size:15px;
+  }
+  a { color: inherit; }
+
+  header.hero{
+    background:#fff;
+    text-align:center;
+    padding:34px 20px 22px 20px;
+    border-bottom:4px solid var(--teal);
+  }
+  header.hero h1{
+    font-size:38px; font-weight:800; color:var(--teal); letter-spacing:2px; margin:0;
+  }
+  header.hero .fullname{ font-size:13px; color:#888; letter-spacing:1.5px; text-transform:uppercase; margin:2px 0 0 0; }
+  header.hero .sub{ font-size:17px; color:#555; margin:8px 0 8px 0; }
+  header.hero .note{ font-size:13px; font-style:italic; color:#555; }
+
+  .toolbar{
+    position: sticky; top:0; z-index:20;
+    background:#fff; border-bottom:1px solid #ddd;
+    padding:10px 20px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+  }
+  .toolbar .btns button{
+    background:var(--teal); color:#fff; border:none; padding:8px 14px; border-radius:5px;
+    font-size:13px; font-weight:600; cursor:pointer; margin-right:8px;
+  }
+  .toolbar .btns button.secondary{ background:#666; }
+  .toolbar .btns button:hover{ opacity:0.88; }
+  .toolbar .hint{ font-size:12px; color:#777; }
+
+  .layout{ display:flex; max-width:1180px; margin:0 auto; align-items:flex-start; }
+
+  nav.side{
+    width:250px; flex-shrink:0; position:sticky; top:58px;
+    max-height: calc(100vh - 70px); overflow-y:auto;
+    padding:18px 12px 40px 20px;
+  }
+  nav.side ul{ list-style:none; margin:0; padding:0; }
+  nav.side li{ margin-bottom:2px; }
+  nav.side a{
+    display:flex; align-items:center; gap:8px;
+    text-decoration:none; color:#333; font-size:13px; padding:7px 8px; border-radius:5px;
+  }
+  nav.side a:hover{ background:#eaeaea; }
+  nav.side .dot{ width:9px; height:9px; border-radius:2px; flex-shrink:0; }
+
+  main{ flex:1; min-width:0; padding:24px 24px 60px 12px; }
+
+  details.section{
+    background:#fff; border-radius:6px; margin-bottom:14px;
+    box-shadow:0 1px 3px rgba(0,0,0,0.08);
+    overflow:hidden;
+    scroll-margin-top: 70px;
+  }
+  details.section > summary{
+    list-style:none; cursor:pointer;
+    color:#fff; font-weight:700; font-size:15px;
+    padding:13px 18px; display:flex; align-items:center; justify-content:space-between;
+  }
+  details.section > summary::-webkit-details-marker{ display:none; }
+  details.section > summary .title{ display:flex; align-items:center; gap:10px; }
+  details.section > summary .sq{ width:10px; height:10px; background:rgba(255,255,255,0.9); flex-shrink:0; }
+  details.section > summary .chevron{ transition: transform 0.15s ease; font-size:13px; }
+  details.section[open] > summary .chevron{ transform: rotate(90deg); }
+
+  .sec-teal   > summary{ background:var(--teal); }
+  .sec-purple > summary{ background:var(--purple); }
+  .sec-red    > summary{ background:var(--red); }
+  .sec-green  > summary{ background:var(--green); }
+  .sec-orange > summary{ background:var(--orange); }
+  .sec-black  > summary{ background:var(--black); }
+
+  .sec-body{ padding:16px 20px 18px 20px; }
+  .sec-body p{ margin:0 0 10px 0; }
+  .sec-body ul{ margin:6px 0 12px 0; padding-left:20px; }
+  .sec-body li{ margin-bottom:6px; }
+  .callout-label{ font-weight:700; color:var(--red); }
+
+  .box{ border-radius:5px; margin:0 0 14px 0; overflow:hidden; border:1px solid #eee; }
+  .box-header{ color:#fff; font-weight:700; font-size:13px; padding:8px 14px; }
+  .box-body{ padding:10px 16px 12px 16px; }
+  .box-body ul{ margin:0; padding-left:18px; }
+  .box-body li{ margin-bottom:6px; }
+  .pink-bg{ background:#fbe9e7; } .pink-hd{ background:var(--red); }
+  .blue-bg{ background:#e3f2f6; } .blue-hd{ background:var(--teal); }
+
+  table.two-col{ width:100%; border-collapse:collapse; margin:0 0 4px 0; font-size:13.5px; }
+  table.two-col th{ text-align:left; padding:8px 12px; color:#fff; }
+  table.two-col th.likes-hd{ background:var(--green); }
+  table.two-col th.dislikes-hd{ background:var(--red); }
+  table.two-col td{ vertical-align:top; padding:7px 12px; border-bottom:1px solid #eee; width:50%; }
+  table.two-col tr:nth-child(even) td.likes-cell{ background:#eaf6ee; }
+  table.two-col tr:nth-child(odd) td.likes-cell{ background:#f4faf6; }
+  table.two-col tr:nth-child(even) td.dislikes-cell{ background:#fbeceb; }
+  table.two-col tr:nth-child(odd) td.dislikes-cell{ background:#fdf5f4; }
+
+  table.seizure{ width:100%; border-collapse:collapse; margin:8px 0 6px 0; font-size:13px; }
+  table.seizure th{ text-align:left; padding:8px 10px; color:#fff; }
+  table.seizure th.step-hd{ background:#8a2418; width:8%; }
+  table.seizure th.major-hd{ background:var(--red); width:47%; }
+  table.seizure th.minor-hd{ background:#d97a63; width:45%; }
+  table.seizure td{ padding:7px 10px; border-bottom:1px solid #f0d9d6; vertical-align:top; }
+  table.seizure td.step-num{ font-weight:700; text-align:center; background:#fbe9e7; color:#8a2418; }
+  table.seizure tr:nth-child(even) td{ background:#fdf5f4; }
+  table.seizure tr:nth-child(odd) td{ background:#fff; }
+  .seizure-caption{ font-size:11.5px; font-style:italic; color:#666; margin:0 0 4px 0; }
+
+  table.summary{ width:100%; border-collapse:collapse; font-size:13.5px; }
+  table.summary td{ padding:9px 12px; border-bottom:1px solid #e5e5e5; vertical-align:top; }
+  table.summary td.label{ font-weight:700; color:var(--teal); width:24%; background:#f4f4f4; }
+  table.summary tr:nth-child(even) td.label{ background:#eef7f0; }
+
+  footer{ text-align:center; font-size:12px; font-style:italic; color:#666; padding:18px 24px 40px 24px; border-top:1px solid #ddd; max-width:1180px; margin:0 auto; }
+
+  @media (max-width: 860px){
+    nav.side{ display:none; }
+    main{ padding:18px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <h1>SARA</h1>
+  <div class="fullname">Sara Hassan</div>
+  <div class="sub">Carer &amp; Support Worker Guide</div>
+  <div class="note">For all staff and carers working with Sara — please read carefully before your first shift.</div>
+</header>
+
+<div class="toolbar">
+  <div class="btns">
+    <button onclick="setAll(true)">Expand all</button>
+    <button class="secondary" onclick="setAll(false)">Collapse all</button>
+  </div>
+  <div class="hint">Click any section heading to expand or collapse it. Use the menu on the left to jump around.</div>
+</div>
+
+<div class="layout">
+  <nav class="side">
+    <ul>
+      <li><a href="#keydetails"><span class="dot" style="background:var(--black)"></span>Key Details &amp; Shift Info</a></li>
+      <li><a href="#about"><span class="dot" style="background:var(--teal)"></span>About Sara</a></li>
+      <li><a href="#comm"><span class="dot" style="background:var(--purple)"></span>How Sara Communicates</a></li>
+      <li><a href="#distress"><span class="dot" style="background:var(--red)"></span>Signs of Distress</a></li>
+      <li><a href="#seizure"><span class="dot" style="background:var(--red)"></span>Epilepsy &amp; Seizure Safety</a></li>
+      <li><a href="#asthma"><span class="dot" style="background:var(--orange)"></span>Asthma, Meds &amp; Health</a></li>
+      <li><a href="#hearing"><span class="dot" style="background:var(--teal)"></span>Hearing Aids &amp; Vision</a></li>
+      <li><a href="#likes"><span class="dot" style="background:var(--green)"></span>Likes &amp; Dislikes</a></li>
+      <li><a href="#rapport"><span class="dot" style="background:var(--purple)"></span>Building Rapport</a></li>
+      <li><a href="#routine"><span class="dot" style="background:var(--teal)"></span>Daily Routine</a></li>
+      <li><a href="#care"><span class="dot" style="background:var(--orange)"></span>Personal Care &amp; Hygiene</a></li>
+      <li><a href="#food"><span class="dot" style="background:var(--green)"></span>Food &amp; Eating</a></li>
+      <li><a href="#outings"><span class="dot" style="background:var(--teal)"></span>Community Access &amp; Outings</a></li>
+      <li><a href="#contacts"><span class="dot" style="background:var(--black)"></span>Family Contacts &amp; Emergency</a></li>
+      <li><a href="#summary"><span class="dot" style="background:var(--black)"></span>Quick Reference Summary</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <details class="section sec-black" id="keydetails" open>
+      <summary><span class="title"><span class="sq"></span>Key Details &amp; Shift Information</span><span class="chevron">&#9656;</span></summary>
+      <div class="sec-body">
+        <table class="summary">
+          <tr><td class="label">Full name</td><td>Sara Hassan</td></tr>
+          <tr><td class="label">Home address</td><td>7 Elwood Place, St Johns Park NSW 2176</td></tr>
+          <tr><td class="label">Main contact</td><td>Rima (mum) — 0432 551 142</td></tr>
+          <tr><td class="label">Backup contact</td><td>Mohammed (dad) — 0405 089 638</td></tr>
+          <tr><td class="label">Grandmother's house</td><td>39 High Street, Cabramatta (Rima's mother)</td></tr>
+          <tr><td class="label">Current shift</td><td>2:45pm – 5:15pm. <b>Being on time is crucial for Sara's care</b> — please plan to arrive promptly.</td></tr>
+          <tr><td class="label">Additional shifts</td><td>Rima may request extra support outside these hours for community outings — please remain flexible if asked.</td></tr>
+        </table>
+        <div class="box">
+          <div class="box-header pink-hd">BUS DROP-OFF — CRITICAL TIMING</div>
+          <div class="box-body pink-bg">
+            <ul>
+              <li>Sara arrives home from school by bus — an authorised adult/carer must be there to receive her.</li>
+              <li>The bus driver will wait <b>3 minutes</b> initially for an authorised carer to be present.</li>
+              <li>The absolute maximum wait is <b>7 minutes total</b>.</li>
+              <li>If no authorised carer has arrived within that time, <b>by law the driver must take Sara to the nearest police station.</b></li>
+              <li>Plan to arrive well before drop-off time — being late is not an option.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <details class="section sec-teal" id="about" open>
+      <summary><span class="title"><span class="sq"></span>About Sara</span><span class="chevron">&#9656;</span></summary>
+      <div class="sec-body">
+        <p>Sara is a very happy, friendly and social young girl. She loves attention — she can be the star of the hour — and enjoys expressing herself in her own way. She can also be a little cheeky: if it isn't made clear that she has to do something, she may try to get away with doing the bare minimum.</p>
+        <p>She is very expressive about what she wants, using her iPad (Proloquo2Go) and sign language to communicate her needs. She is inquisitive and likes to explore, but always has a reason for what she's doing, and she'll try to let you know when something is bothering her.</p>
+        <p><span class="callout-label">One thing every new carer should know:</span> a kind word, patience, and repeating yourself goes a long way with Sara. She wears hearing aids and glasses — always check they're in her bag when she gets home, and make sure she doesn't remove or lose them. Sara has seizures, usually triggered around her periods, so carers should be on high alert during that time. Sara takes her iPad with her everywhere.</p>
+      </div>
+    </details>
+
+    <details class="section sec-purple" id="comm" open>
+      <summary><span class="title"><span class="sq"></span>How Sara Communicates</span><span class="chevron">&#9656;</span></summary>
+      <div class="sec-body">
+        <ul>
+          <li><b>Yes</b> — she signs "more" by tapping her hand on her chest.</li>
+          <li><b>No</b> — she shakes her head or signs "finish" by shaking her hand.</li>
+          <li><b>Pain, discomfort, hunger, tiredness or frustration</b> — Sara has a high pain threshold, so if she cries it is likely very painful. She may become agitated, curl into a fetal position, not want to move, and her eyes may look red. She may sign "more" if asked whether she's hurt or feels sick, and she gets migraines/headaches fairly often. If hungry, she'll ask for food or go to the fridge herself. If frustrated or tired, she becomes agitated and won't listen as well as usual.</li>
+          <li><b>Words/phrases that work well</b> — "Use your words" (prompting her iPad), "Good listening", "Are you doing good listening?", "Sara do", "Sara's turn", "What does Sara want?", counting down from 5 before a transition, and an encouraging, excited tone.</li>
+          <li><b>Words/tone to avoid</b> — don't admonish Sara, she will shut down. Keep your tone encouraging, confident and assertive.</li>
+          <li><b>Proloquo2Go (AAC app)</b> — Sara uses it every day and knows it well. If edit mode is left on she may rearrange the buttons. Prompt her with "use your words" to encourage her to communicate through the app.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="section sec-red" id="distress" open>
+      <summary><span class="title"><span class="sq"></span>Signs of Distress &amp; When to Act</span><span class="chevron">&#9656;</span></summary>
+      <div class="sec-body">
+        <p>Sara is usually a very chill girl, happy playing on her iPad or keyboard piano, and might ask you to sing to her or put on a song.</p>
+        <div class="box">
+          <div class="box-header pink-hd">EARLY WARNING SIGNS — Watch for these</div>
+          <div class="box-body pink-bg">
+            <ul>
+              <li>Becoming agitated</li>
+              <li>Walking around, not settling anywhere</li>
+              <li>Not knowing where to sit, constantly moving</li>
+            </ul>
+          </div>
+        </div>
+        <ul>
+          <li><b>What usually works to calm her</b> — stay calm; offer to sing to her; massage her arms; ask her what she wants and encourage her to "use her words" on the iPad; offer a game or something to watch together; reassure her that everything is okay and that she is safe; ask if she wants to call mum, Mohammed (dad), or Radwan.</li>
+          <li><b>What makes it worse</b> — not being patient with her, or not reassuring her that everything will be okay.</li>
+          <li><b>What carers should never do</b> — never let her out of your sight. Be patient with her.</li>
+          <li><b>When to contact family</b> — as soon as an incident happens, or if she isn't returning to her normal self.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="section sec-red" id="seizure" open>
+      <summary><span class="title"><span class="sq"></span>Epilepsy &amp; Seizure Safety</span><span class="chevron">&#9656;</span></summary>
+      <div class="sec-body">
+        <p>Sara has a current seizure management plan. A seizure usually looks like: her eyes roll back, she shakes, and becomes unconscious — this is consistent with a <b>major (convulsive) seizure</b>. There are usually no clear warning signs beforehand, though she may seem in pain or agitated. <span class="callout-label">Known trigger: her periods / menstrual cycle</span> — carers should be on high alert during this time.</p>
+        <p><b>Seizure first-aid steps</b> — from Sara's official Seizure Action Plan. Sara's seizures typically present as <b>Major Seizures</b> (left column), so this is the column to follow, but both are included for reference in case her presentation ever differs.</p>
+        <table class="seizure">
+          <tr>
+            <th class="step-hd">Step</th>
+            <th class="major-hd">Major Seizures — convulsive, major movement (e.g. tonic-clonic) — Sara's typical presentation</th>
+            <th class="minor-hd">Minor Seizures — staring, impaired consciousness or unusual behaviour</th>
+          </tr>
+          <tr><td class="step-num">1</td><td>Stay calm</td><td>Stay calm</td></tr>
+          <tr><td class="step-num">2</td><td>Check for medical identification</td><td>Check for medical identification</td></tr>
+          <tr><td class="step-num">3</td><td>Protect her from injury — remove harmful objects nearby, loosen any tight clothing or restraints, place something soft under her head</td><td>Protect her from injury — remove harmful objects nearby</td></tr>
+          <tr><td class="step-num">4</td><td>Stay with her and reassure her. Do <b>not</b> put anything in her mouth or restrain her</td><td>Stay with her and reassure her</td></tr>
+          <tr><td class="step-num">5</td><td>Time the seizure</td><td>Time the seizure</td></tr>
+          <tr><td class="step-num">6</td><td>When the seizure is over, roll her onto her side to keep the airway clear</td><td>If it develops into a generalised tonic-clonic (major) seizure, switch to the Major Seizures steps</td></tr>
+          <tr><td class="step-num">7</td><td>Treat any injuries and check for concussion</td><td>—</td></tr>
+          <tr><td class="step-num">8</td><td>Consider whether an ambulance needs to be called — <b>for Sara, call 000 if the seizure lasts longer than 4 minutes</b></td><td>—</td></tr>
+          <tr><td class="step-num">9</td><td>Stay with her and reassure her — she may be sleepy, confused, or combative afterwards</td><td>—</td></tr>
+        </table>
+        <p class="seizure-caption">Source: Sara's Seizure Action Plan (Mark A. Westphalen Pty Limited), page 2 of 7. The 4-minute ambulance threshold is confirmed by Sara's family.</p>
+        <ul>
+          <li><b>After a seizure</b> — call Sara's mum, keep her seated, and record how long the seizure lasted.</li>
+          <li><b>Emergency medication</b> — yes, but only parents and teachers are permitted to give it. Sara's regular medication is given in the morning, around dinner time, and at night.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="section sec-orange" id="asthma" open>
+      <summary><span class="title"><span class="sq"></span>Asthma, Medication &amp; Health</span><span class="chevron">&#9656;</span></summary>
+      <div class="sec-body">
+        <ul>
+          <li><b>Ventolin</b> — Sara rarely needs it and has low-risk asthma. It's kept at home, upstairs. She uses a spacer. Sign she may need it: coughing.</li>
+          <li><b>Allergies</b> — none known.</li>
+          <li><b>Current medications</b> — none beyond her seizure medication (see previous section).</li>
+          <li><b>Migraine</b> — red eyes, avoiding light; she'll respond "yes" if asked "Sara, do you have a headache?"</li>
+          <li><b>Tummy pain / nausea</b> — holding her stomach, excess saliva; she'll respond if asked "Sara, do you need to vomit?"</li>
+          <li><b>Constipation</b> — finds it hard to sit, gets onto all fours (hands and feet) and tries to push.</li>
+          <li><b>When to contact family about health concerns</b> — if she seems to be in pain or agitated.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="section sec-teal" id="hearing" open>
+      <summary><span class="title"><span class="sq"></span>Hearing Aids &amp; Vision</span><span class="chevron">&#9656;</span></summary>
+      <div class="sec-body">
+        <ul>
+          <li>Sara currently wears hearing aids and glasses.</li>
+          <li><b>When to wear / remove</b> — she wears them leaving for school and usually removes the hearing aids on the bus home. Always check they're in her bag when she gets home.</li>
+          <li><b>Signs they're uncomfortable or not working</b> — she points at them repeatedly and may get frustrated and remove them.</li>
+          <li><b>Chargers, batteries, spare parts</b> — kept upstairs in the kitchen. Caution: these use button batteries, handle carefully.</li>
+          <li><b>Communicating without them</b> — Sara can hear without her hearing aids, though certain sounds (like f, th, s) are harder for her to pick up. She copes fine.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="section sec-green" id="likes" open>
+      <summary><span class="title"><span class="sq"></span>&#10084;&nbsp;Likes &amp; Dislikes</span><span class="chevron">&#9656;</span></summary>
+      <div class="sec-body">
+        <table class="two-col">
+          <tr><th class="likes-hd">&#10003; LIKES</th><th class="dislikes-hd">&#10007; DISLIKES / TRIGGERS</th></tr>
+          <tr><td class="likes-cell">Nursery rhymes — Twinkle Twinkle, Incy Wincy Spider, Five Little Ducks</td><td class="dislikes-cell">Contrasting-colour clothing (e.g. leopard print, black-and-white stripes)</td></tr>
+          <tr><td class="likes-cell">Action songs — Ring a Ring o' Roses, Round and Round the Garden</td><td class="dislikes-cell">Hair ties / elastic or black bands around her wrists — make her gag and vomit</td></tr>
+          <tr><td class="likes-cell">Movies/songs — Frozen ("Let It Go"), Moana</td><td class="dislikes-cell">Being spoken to in a negative tone (e.g. being told she's "bad")</td></tr>
+          <tr><td class="likes-cell">TV shows — The Wiggles ("Taba Naba"), Raa Raa the Noisy Lion</td><td class="dislikes-cell">Not having internet access, or her speaking app not working</td></tr>
+          <tr><td class="likes-cell">Playing her keyboard piano</td><td class="dislikes-cell">Being told you're going somewhere when you're not</td></tr>
+          <tr><td class="likes-cell">Her toy "Bird" — brings her a lot of comfort</td><td class="dislikes-cell"></td></tr>
+          <tr><td class="likes-cell">Her "dua pillow" at bedtime</td><td class="dislikes-cell"></td></tr>
+          <tr><td class="likes-cell">Visiting grandparents ("Tayta and Jiddo's house")</td><td class="dislikes-cell"></td></tr>
+          <tr><td class="likes-cell">Swimming lessons and dance class</td><td class="dislikes-cell"></td></tr>
+          <tr><td class="likes-cell">Swings, walking, bike riding, hide and seek</td><td class="dislikes-cell"></td></tr>
+          <tr><td class="likes-cell">Sitting in the sun on sunny days</td><td class="dislikes-cell"></td></tr>
+          <tr><td class="likes-cell">Being praised with positive phrases ("good listening", "Sara can do")</td><td class="dislikes-cell"></td></tr>
+          <tr><td class="likes-cell">Favourite foods — tuna &amp; avocado sushi, chocolate milk (pop-top lid), sultanas, yoghurt, hot chips &amp; nuggets, Gong Cha, fruit cut into bite-size pieces, steamed veggies, rice noodles, pasta</td><td class="dislikes-cell"></td></tr>
+        </table>
+      </div>
+    </details>
+
+    <details class="section sec-purple" id="rapport" open>
+      <summary><span class="title"><span class="sq"></span>Building Rapport with Sara</span><span class="chevron">&#9656;</span></summary>
+      <div class="sec-body">
+        <ul>
+          <li><b>What helps her feel comfortable with a new carer</b> — spending time around them and getting to know them; carers talking to her and showing genuine interest in what she's doing.</li>
+          <li><b>Building trust on the first shift</b> — show interest in what she's doing (e.g. "Oh, you're watching Twinkle Twinkle — do you want to sing?"), ask her about her favourites and chat with her (e.g. "My favourite movie is Lion King — what's yours?"), and treat her as though you expect an answer via her iPad, even if she doesn't respond. Call her "Susu."</li>
+          <li><b>Activities she enjoys with adults</b> — hide and seek, Ring a Ring o' Roses, action songs, shopping, walks, the swing, blowing bubbles.</li>
+          <li><b>Hugs / physical affection</b> — if she's comfortable with someone, yes. Ask "Can I have a hug?" and she'll let you know. If she comes very close to you, she may be asking for a hug.</li>
+          <li><b>Boundaries around touch / privacy</b> — Sara isn't always comfortable with people changing her nappy or showering her. Always ask if she wants mum or the named carer to help — she'll let you know if she's okay with it.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="section sec-teal" id="routine" open>
+      <summary><span class="title"><span class="sq"></span>Daily Routine</span><span class="chevron">&#9656;</span></summary>
+      <div class="sec-body">
+        <ul>
+          <li><b>Morning</b> — gets up, takes medication, has chocolate milk (with a small amount of laxative in it), goes to the toilet, gets dressed, brushes hair, puts on glasses and hearing aids, packs her lunch box and water bottle, and waits for the bus. If hungry for breakfast: avocado on toast (no crust, cut into 6 pieces) or peanut butter on toast (no crust); sometimes cereal, pancakes, manoosh, or hash browns.</li>
+          <li><b>After school</b> — Sara is dropped home by bus; an authorised carer <b>must be there to receive her on time</b> (see the bus drop-off timing note in Key Details above). She then waits in the garage; loves sitting in the sun if it's sunny. May play on her iPad or use the swing in the garage, watch DVDs, or go for a walk. Once mum is home: shoes off and packed away, unpacks lunch box, hearing aids and glasses go on the kitchen bench, bag goes in her room, and she sits on the toilet. Mondays: dance class (dance uniform). Wednesdays/Fridays: therapist visits at home. Thursdays: therapy at the clinic. Other days: comfy house clothes. Likes her hair brushed again and to eat if hungry.</li>
+          <li><b>Bedtime</b> — after medication: onesie with the zip at the back, PJs on top, double nappies. Into bed under her body sock, blankets and weighted blanket, with her star pillow. Fan or heater on. She likes Ayat al-Kursi read to her, then the three Quls, while her hair/forehead is gently stroked (hair out of any tie, no plaits). Then her dua pillow plays until she falls asleep.</li>
+          <li><b>Weekend</b> — Saturdays: swim lessons at Rainbow Club, then sushi, then home for a shower before heading to grandma's house (39 High Street, Cabramatta).</li>
+          <li><b>Transitions</b> — make the next activity sound interesting; count down and praise her to help her move between activities.</li>
+          <li><b>Small responsibilities</b> (for Sara's independence, not carer tasks) — packing shoes into the shoe cupboard, unpacking her own things, feeding the cat (Milo), helping set the table, sometimes collecting washing from the line.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="section sec-orange" id="care" open>
+      <summary><span class="title"><span class="sq"></span>Personal Care &amp; Hygiene</span><span class="chevron">&#9656;</span></summary>
+      <div class="sec-body">
+        <ul>
+          <li><b>Showering/bathing</b> — needs support. Uses a special shampoo for scalp psoriasis, conditioner on the ends only, and body gel soap (she dislikes loofahs).</li>
+          <li><b>Dressing</b> — needs support putting clothes on (she can take them off easily) — encourage and teach her, e.g. pulling up pants and fixing her shirt.</li>
+          <li><b>Toileting/continence</b> — wears nappies for wees but usually does poos on the toilet. She won't tell you, so if she farts, take her to sit on the toilet. She may sit on the floor or hover near the toilet to indicate she needs it. She doesn't tolerate having her bottom wiped — always wear gloves if needed; she prefers the bidet hose. Let her sit on the toilet and remove her own pants/nappy; if she signs "more" (toilet), help her put on and pull up a fresh nappy.</li>
+          <li><b>Menstrual care</b> — needs support, though manageable as she's still in nappies. Inform her parents if you suspect she's on her period.</li>
+          <li><b>Privacy &amp; dignity</b> — ask Sara whether she wants a particular carer or her mum to help. Ask "Are you finished?" (sign "more" = not finished, sign "finish" = done). If she says no to help, ask "Call mum?"</li>
+          <li><b>Teeth, hair, nails</b> — Sara hates having her teeth brushed; keep it quick and use an electric toothbrush. Hair must be brushed with her sensory hairbrush. She's fine with everything else, just keep shampoo out of her eyes. She enjoys a "cleansing" routine in the shower (head back, cleanser around the nose, head back again to rinse).</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="section sec-green" id="food" open>
+      <summary><span class="title"><span class="sq"></span>Food &amp; Eating</span><span class="chevron">&#9656;</span></summary>
+      <div class="sec-body">
+        <ul>
+          <li><b>Usual routine</b> — eats leftovers from school in the afternoon, then dinner once mum is home and the after-school routine is done.</li>
+          <li><b>Foods to avoid</b> — halal only; encourage healthy food generally.</li>
+          <li><b>Choking risk / supervision</b> — no known choking risk, but she's cheeky and may ask carers to feed her, or try to fit too much food in her mouth at once. Cut sandwiches into bite-size pieces, encourage her to use a spoon/fork ("Sara do"), and encourage her to sit at the table with her siblings.</li>
+          <li><b>Repeated requests for food</b> — ask her to wait for mum; offer fruit around the house. Sara can binge-eat in the afternoon and won't settle until she's had her meal. If food isn't ready, redirect her to play with the cat (Milo), go to the backyard, or sit on the front veranda while she waits.</li>
+          <li><b>Fridge access</b> — staff are allowed to open the fridge for her.</li>
+          <li><b>Documentation</b> — not routinely required, but let mum know if she's eating a lot more than usual.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="section sec-teal" id="outings" open>
+      <summary><span class="title"><span class="sq"></span>Community Access &amp; Outings</span><span class="chevron">&#9656;</span></summary>
+      <div class="sec-body">
+        <p>Favourite outings: interactive play centres, parks, water parks, shopping, swimming, the farm, the zoo, the aquarium; sometimes bowling. No places are strictly off-limits, but she hasn't enjoyed bowling lately and it's unclear if she likes Flip Out. She loves being out and can usually manage around 5 hours.</p>
+        <div class="box">
+          <div class="box-header blue-hd">OUTING CHECKLIST — Before you leave</div>
+          <div class="box-body blue-bg">
+            <ul>
+              <li>Nappies and a spare pair of pants (in case of leaks)</li>
+              <li>Wipes and water bottle</li>
+              <li>Glasses and hearing aids</li>
+              <li>iPad (for communication and entertainment)</li>
+              <li>Snacks/food</li>
+              <li>1:1 supervision at all times — she can abscond</li>
+              <li>In the car: back seat, seatbelt on, child locks on</li>
+            </ul>
+          </div>
+        </div>
+        <ul>
+          <li><b>If she tries to walk away</b> — follow her, call her back, offer to head home, and ask what she wants (encourage her to use her iPad). There's always a reason she's walking off — use positive reinforcement.</li>
+          <li><b>Water safety</b> — Sara loves water but needs very close supervision. She can walk in the water but needs a pool noodle for swimming. Main concern: possibility of a seizure in the pool (has not occurred to date).</li>
+          <li><b>Seatbelts</b> — she tolerates them fine but can't put one on herself. Help her, and if she refuses, stop the car and explain you won't drive until it's on (positive reinforcement).</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="section sec-black" id="contacts" open>
+      <summary><span class="title"><span class="sq"></span>Family Contacts &amp; Emergency</span><span class="chevron">&#9656;</span></summary>
+      <div class="sec-body">
+        <ul>
+          <li><b>First point of contact during a shift</b> — Mum, Rima — 0432 551 142.</li>
+          <li><b>Backup contact</b> — Mohammed (dad), 0405 089 638.</li>
+          <li><b>Call immediately if</b> — Sara is having a seizure, is unconscious, or has absconded.</li>
+          <li><b>Call 000 if</b> — Sara is having a seizure lasting longer than 4 minutes, is unconscious, or has absconded.</li>
+          <li><b>Contacting school / therapists / support coordinator directly</b> — permitted; they often come to the house to work with Sara after school.</li>
+          <li><b>Photos / video updates</b> — encouraged, especially on special outings (photos taken on her iPad).</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="section sec-black" id="summary" open>
+      <summary><span class="title"><span class="sq"></span>Quick Reference Summary</span><span class="chevron">&#9656;</span></summary>
+      <div class="sec-body">
+        <table class="summary">
+          <tr><td class="label">Address</td><td>7 Elwood Place, St Johns Park NSW 2176</td></tr>
+          <tr><td class="label">Shift</td><td>2:45pm – 5:15pm — punctuality is crucial. Extra shifts may be requested by Rima for outings</td></tr>
+          <tr><td class="label">Bus drop-off</td><td>Driver waits 3 min, max 7 min total — after that Sara is taken to the nearest police station. Be there on time</td></tr>
+          <tr><td class="label">Main contact</td><td>Rima (mum) — 0432 551 142 &nbsp;|&nbsp; Backup: Mohammed (dad) — 0405 089 638</td></tr>
+          <tr><td class="label">Communication</td><td>Sign "more" (tap chest) = yes &nbsp;|&nbsp; shake head / sign "finish" = no &nbsp;|&nbsp; iPad (Proloquo2Go) for AAC</td></tr>
+          <tr><td class="label">Seizure protocol</td><td>Major seizure typical — stay calm, protect &amp; time it, roll on side after, call 000 if over 4 minutes</td></tr>
+          <tr><td class="label">Seizure triggers</td><td>Her periods / menstrual cycle — high alert during this time</td></tr>
+          <tr><td class="label">Hearing &amp; vision</td><td>Hearing aids + glasses on for school, removed on the bus home — check bag on return</td></tr>
+          <tr><td class="label">Food</td><td>Halal only; cut food into bite-size pieces; 1:1 support and supervision at mealtimes</td></tr>
+          <tr><td class="label">Outings</td><td>1:1 supervision always; pack nappies, spare pants, iPad, hearing aids/glasses</td></tr>
+          <tr><td class="label">Rapport</td><td>Call her "Susu"; show genuine interest; let her lead via her iPad; be patient and consistent</td></tr>
+        </table>
+      </div>
+    </details>
+
+  </main>
+</div>
+
+<footer>
+  This guide was prepared using information from Sara's family and her Seizure Action Plan to help carers and staff provide the best possible support.<br>
+  If you have questions or observations to add, please raise them with Sara's mum or the care coordinator.
+</footer>
+
+<script>
+  function setAll(open){
+    document.querySelectorAll('details.section').forEach(function(d){ d.open = open; });
+  }
+  // Smooth-scroll and auto-open target section when a nav link is clicked
+  document.querySelectorAll('nav.side a').forEach(function(link){
+    link.addEventListener('click', function(e){
+      var id = link.getAttribute('href').slice(1);
+      var target = document.getElementById(id);
+      if (target) { target.open = true; }
+    });
+  });
+</script>
+
+</body>
+</html>
